@@ -28,6 +28,7 @@ const User = ({ user }) => {
             <Grid item>
               <FormLabel>Email: </FormLabel>
             </Grid>
+
             <Grid item>
               <input
                 type="email"
