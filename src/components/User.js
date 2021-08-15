@@ -1,45 +1,40 @@
 import { useState } from "react";
-import { FormLabel, Grid } from "@material-ui/core";
+import { Grid, TextField, Typography } from "@material-ui/core";
 
 const User = ({ user }) => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
 
   return (
-    <div>
-      <div>ID: {user.id}</div>
+    <Grid container style={{ marginTop: "2vh", marginBottom: "2vh" }}>
+      <Grid item xs={12}>
+        <Typography>ID: {user.id}</Typography>
+      </Grid>
 
-      <form onSubmit={(e) => e.preventDefault()}>
-        <Grid container>
-          <div>
-            <Grid item>
-              <label>Name: </label>
-            </Grid>
-
-            <Grid item>
-              <input
+      <Grid item xs={12}>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <Grid container>
+            <Grid item xs={12}>
+              <TextField
+                label="Name"
                 type="text"
                 value={name}
                 onChange={({ target: { value } }) => setName(value)}
               />
             </Grid>
-          </div>
-          <div>
-            <Grid item>
-              <FormLabel>Email: </FormLabel>
-            </Grid>
 
-            <Grid item>
-              <input
+            <Grid item xs={12}>
+              <TextField
+                label="Email"
                 type="email"
                 value={email}
                 onChange={({ target: { value } }) => setEmail(value)}
               />
             </Grid>
-          </div>
-        </Grid>
-      </form>
-    </div>
+          </Grid>
+        </form>
+      </Grid>
+    </Grid>
   );
 };
 
