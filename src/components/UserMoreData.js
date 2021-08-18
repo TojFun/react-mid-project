@@ -15,13 +15,17 @@ const useStyles = makeStyles({
   mb: {
     marginBottom: "1vh",
   },
+
+  selected: {
+    backgroundColor: "#ffbd99",
+  },
 });
 
-function UserMoreData({ address, setAddress }) {
+function UserMoreData({ address, setAddress, isUserSelected }) {
   const classes = useStyles();
 
   return (
-    <Accordion>
+    <Accordion className={isUserSelected ? classes.selected : undefined}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

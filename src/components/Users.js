@@ -1,19 +1,33 @@
 import { useEffect, useState } from "react";
 import getData from "../services/jph";
-import User from "./User";
 
-import { Grid, Button, TextField } from "@material-ui/core";
+import User from "./User";
+import SearchBar from "./SearchBar";
+
+import Grid from "@material-ui/core/Grid";
+import TodosAndPosts from "./TodosAndPosts";
 
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  addButtonWrapper: { display: "flex" },
-  addButton: { minWidth: "50%", marginLeft: "auto", marginRight: "auto" },
+  relative: { position: "relative" },
+
+  stickToTop: {
+    position: "fixed",
+  },
+  nav: {
+    position: "fixed",
+    top: 0,
+    width: "96vw",
+    backgroundColor: "white",
+  },
 });
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const classes = useStyles();
 
@@ -23,64 +37,65 @@ const Users = () => {
 
   return (
     <Grid container spacing={5}>
-      <Grid item md={10} xs={9}>
-        <TextField
-          label="Search"
-          value={search}
-          type="text"
-          id="search-input"
-          onChange={({ target: { value } }) => setSearch(value)}
-          variant="filled"
-          fullWidth
-        />
+      <Grid item xs={12}>
+        <SearchBar search={search} setSearch={setSearch} />
       </Grid>
 
-      <Grid item md={2} xs={3} className={classes.addButtonWrapper}>
-        <Button
-          className={classes.addButton}
-          color="primary"
-          variant="contained"
-          onClick={() => {}}
-        >
-          Add
-        </Button>
+      <Grid item xs={selectedUser == null ? 12 : 6}>
+        <Grid container>
+          {users
+            .filter(
+              (user) =>
+                user.name.toLowerCase().includes(search.toLowerCase()) ||
+                user.email.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((user) => (
+              <Grid
+                item
+                key={user.id}
+                lg={selectedUser == null ? 3 : 6}
+                md={selectedUser == null ? 4 : 6}
+                sm={selectedUser == null ? 6 : 12}
+              >
+                <User
+                  user={user}
+                  setUser={(newData) =>
+                    setUsers(
+                      users.map((currentUser) =>
+                        currentUser.id === user.id
+                          ? {
+                              ...currentUser,
+                              name: newData.name,
+                              email: newData.email,
+                              address: {
+                                ...currentUser.address,
+                                ...newData.address,
+                              },
+                            }
+                          : currentUser
+                      )
+                    )
+                  }
+                  deleteUser={() =>
+                    setUsers(
+                      users.filter((currentUser) => currentUser.id !== user.id)
+                    )
+                  }
+                  selectUser={() =>
+                    setSelectedUser(selectedUser === user.id ? null : user.id)
+                  }
+                  isSelected={selectedUser === user.id}
+                />
+              </Grid>
+            ))}
+        </Grid>
       </Grid>
 
-      {users
-        .filter(
-          (user) =>
-            user.name.toLowerCase().includes(search.toLowerCase()) ||
-            user.email.toLowerCase().includes(search.toLowerCase())
-        )
-        .map((user) => (
-          <Grid item key={user.id} lg={3} md={4} sm={6}>
-            <User
-              user={user}
-              setUser={(newData) =>
-                setUsers(
-                  users.map((currentUser) =>
-                    currentUser.id === user.id
-                      ? {
-                          ...currentUser,
-                          name: newData.name,
-                          email: newData.email,
-                          address: {
-                            ...currentUser.address,
-                            ...newData.address,
-                          },
-                        }
-                      : currentUser
-                  )
-                )
-              }
-              deleteUser={() =>
-                setUsers(
-                  users.filter((currentUser) => currentUser.id !== user.id)
-                )
-              }
-            />
-          </Grid>
-        ))}
+      {selectedUser != null && (
+        <Grid item xs={6}>
+          <TodosAndPosts />
+        </Grid>
+      )}
     </Grid>
   );
 };
