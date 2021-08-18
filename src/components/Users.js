@@ -46,11 +46,41 @@ const Users = () => {
         </Button>
       </Grid>
 
-      {users.map((user) => (
-        <Grid item key={user.id} lg={3} md={4} sm={6}>
-          <User user={user} />
-        </Grid>
-      ))}
+      {users
+        .filter(
+          (user) =>
+            user.name.toLowerCase().includes(search.toLowerCase()) ||
+            user.email.toLowerCase().includes(search.toLowerCase())
+        )
+        .map((user) => (
+          <Grid item key={user.id} lg={3} md={4} sm={6}>
+            <User
+              user={user}
+              setUser={(newData) =>
+                setUsers(
+                  users.map((currentUser) =>
+                    currentUser.id === user.id
+                      ? {
+                          ...currentUser,
+                          name: newData.name,
+                          email: newData.email,
+                          address: {
+                            ...currentUser.address,
+                            ...newData.address,
+                          },
+                        }
+                      : currentUser
+                  )
+                )
+              }
+              deleteUser={() =>
+                setUsers(
+                  users.filter((currentUser) => currentUser.id !== user.id)
+                )
+              }
+            />
+          </Grid>
+        ))}
     </Grid>
   );
 };
