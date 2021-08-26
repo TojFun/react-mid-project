@@ -1,14 +1,11 @@
 import { Button, Grid, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const styles = {
   addButtonWrapper: { display: "flex" },
   addButton: { minWidth: "50%", marginLeft: "auto", marginRight: "auto" },
-});
+};
 
 const SearchBar = ({ search, setSearch }) => {
-  const classes = useStyles();
-
   return (
     <Grid container>
       <Grid item md={10} xs={9}>
@@ -23,9 +20,9 @@ const SearchBar = ({ search, setSearch }) => {
         />
       </Grid>
 
-      <Grid item md={2} xs={3} className={classes.addButtonWrapper}>
+      <Grid item md={2} xs={3} sx={{ ...styles.addButtonWrapper }}>
         <Button
-          className={classes.addButton}
+          sx={{ ...styles.addButton }}
           color="primary"
           variant="contained"
           onClick={() => {}}

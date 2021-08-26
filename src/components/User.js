@@ -12,10 +12,9 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
+import { Box } from "@material-ui/core";
 
-import { makeStyles } from "@material-ui/core";
-
-const useStyles = makeStyles({
+const styles = {
   user: { padding: "2%", margin: "2%" },
 
   mb: {
@@ -32,7 +31,7 @@ const useStyles = makeStyles({
   selected: {
     backgroundColor: "#ed9a6d",
   },
-});
+};
 
 const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
   const [userData, setUserData] = useState({
@@ -47,8 +46,6 @@ const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const classes = useStyles();
-
   const submit = (e) => {
     e.preventDefault();
 
@@ -56,7 +53,11 @@ const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
   };
 
   return (
-    <Card className={`${isSelected && classes.selected} ${classes.user}`}>
+    <Card
+      sx={
+        isSelected ? { ...styles.selected, ...styles.user } : { ...styles.user }
+      }
+    >
       <form onSubmit={submit}>
         <CardContent>
           {user.todos.find((todo) => !todo.completed) ? (
@@ -69,20 +70,21 @@ const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
             </Typography>
           )}
 
-          <Typography variant="h5" className={classes.mb}>
-            <span
-              className={isHovered ? classes.onHover : undefined}
+          <Typography variant="h5" sx={{ ...styles.mb }}>
+            <Box
+              style={{ display: "inline" }}
+              sx={isHovered ? { ...styles.onHover } : undefined}
               onClick={selectUser}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
               User ID: {user.id}
-            </span>
+            </Box>
           </Typography>
 
           <TextField
             variant="outlined"
-            className={classes.mb}
+            sx={{ ...styles.mb }}
             label="Name"
             type="text"
             value={userData.name}
@@ -94,7 +96,7 @@ const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
 
           <TextField
             variant="outlined"
-            className={classes.mb}
+            sx={{ ...styles.mb }}
             label="Email"
             type="email"
             value={userData.email}
@@ -107,7 +109,7 @@ const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
 
         <CardActions>
           <Grid container>
-            <Grid item xs={12} className={classes.actions}>
+            <Grid item xs={12} sx={{ ...styles.actions }}>
               <Button type="submit">Update</Button>
               <Button onClick={deleteUser}>Delete</Button>
             </Grid>

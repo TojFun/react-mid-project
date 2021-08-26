@@ -9,9 +9,7 @@ import AccordionSummary from "@material-ui/core/AccordionSummary";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { makeStyles } from "@material-ui/core";
-
-const useStyles = makeStyles({
+const styles = {
   mb: {
     marginBottom: "1vh",
   },
@@ -19,13 +17,11 @@ const useStyles = makeStyles({
   selected: {
     backgroundColor: "#ffbd99",
   },
-});
+};
 
 function UserMoreData({ address, setAddress, isUserSelected }) {
-  const classes = useStyles();
-
   return (
-    <Accordion className={isUserSelected ? classes.selected : undefined}>
+    <Accordion sx={isUserSelected ? { ...styles.selected } : undefined}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -38,7 +34,7 @@ function UserMoreData({ address, setAddress, isUserSelected }) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              className={classes.mb}
+              sx={{ ...styles.mb }}
               label="Street"
               type="text"
               value={address.street}
@@ -51,7 +47,7 @@ function UserMoreData({ address, setAddress, isUserSelected }) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              className={classes.mb}
+              sx={{ ...styles.mb }}
               label="City"
               type="text"
               value={address.city}
@@ -62,7 +58,7 @@ function UserMoreData({ address, setAddress, isUserSelected }) {
           <Grid item xs={12}>
             <TextField
               variant="outlined"
-              className={classes.mb}
+              sx={{ ...styles.mb }}
               label="Zip Code"
               type="text"
               value={address.zipcode}
