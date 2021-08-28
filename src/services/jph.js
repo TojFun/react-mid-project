@@ -12,9 +12,18 @@ const getData = async () => {
     return {
       ok: true,
       data: users.map((user) => {
+        const newToDos = [];
+
+        for (const todo of todos) {
+          if (todo.userId !== user.id) continue;
+
+          if (todo.completed) newToDos.push(todo);
+          else newToDos.unshift(todo);
+        }
+
         return {
           ...user,
-          todos: todos.filter(({ userId }) => userId === user.id),
+          todos: newToDos,
           posts: posts.filter(({ userId }) => userId === user.id),
         };
       }),

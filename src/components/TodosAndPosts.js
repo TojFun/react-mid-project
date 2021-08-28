@@ -32,11 +32,15 @@ function TodosAndPosts({ user, setUser }) {
                   check={(checked) => {
                     setUser({
                       ...user,
-                      todos: user.todos.map((currentTodo) =>
-                        currentTodo.id === todo.id
-                          ? { ...todo, completed: checked }
-                          : currentTodo
-                      ),
+                      todos: checked
+                        ? [
+                            ...user.todos.filter(({ id }) => id !== todo.id),
+                            { ...todo, completed: true },
+                          ]
+                        : [
+                            { ...todo, completed: false },
+                            ...user.todos.filter(({ id }) => id !== todo.id),
+                          ],
                     });
                   }}
                 />
