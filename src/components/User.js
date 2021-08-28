@@ -15,8 +15,6 @@ import CardActions from "@material-ui/core/CardActions";
 import { Box } from "@material-ui/core";
 
 const styles = {
-  user: { padding: "2%", margin: "2%" },
-
   mb: {
     marginBottom: "1vh",
   },
@@ -55,7 +53,9 @@ const User = ({ user, setUser, deleteUser, selectUser, isSelected }) => {
   return (
     <Card
       sx={
-        isSelected ? { ...styles.selected, ...styles.user } : { ...styles.user }
+        isSelected
+          ? { ...styles.selected, padding: "2%", margin: "2%" }
+          : { padding: "2%", margin: "2%" }
       }
     >
       <form onSubmit={submit}>
