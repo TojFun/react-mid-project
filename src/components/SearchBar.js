@@ -5,7 +5,7 @@ const styles = {
   addButton: { minWidth: "50%", marginLeft: "auto", marginRight: "auto" },
 };
 
-const SearchBar = ({ search, setSearch }) => {
+const SearchBar = ({ search, setSearch, addMode }) => {
   return (
     <Grid container>
       <Grid item md={10} xs={9}>
@@ -25,7 +25,7 @@ const SearchBar = ({ search, setSearch }) => {
           sx={{ ...styles.addButton }}
           color="primary"
           variant="contained"
-          onClick={() => {}}
+          onClick={addMode}
         >
           Add
         </Button>
