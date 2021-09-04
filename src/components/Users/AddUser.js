@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 
-const buttonSpace = "1.6%";
+const buttonSpace = "1.55%";
 
 const AddUser = ({ cancel, addUser }) => {
   const [name, setName] = useState("");
@@ -33,6 +33,7 @@ const AddUser = ({ cancel, addUser }) => {
             value={name}
             onChange={({ target: { value } }) => setName(value)}
             fullWidth
+            sx={{ mb: "2.5%" }}
           />
 
           <TextField
