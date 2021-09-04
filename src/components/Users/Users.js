@@ -39,7 +39,7 @@ const Users = ({
           }
           deleteUser={() => {
             setUsers(users.filter((currentUser) => currentUser.id !== user.id));
-            if (selectedUser === user.id) selectUser(null);
+            if (selectedUser === user.id) selectUser(user);
           }}
           selectUser={() => selectUser(user)}
           isSelected={selectedUser === user.id}
