@@ -8,8 +8,6 @@ import {
 } from "@material-ui/core";
 import { useState } from "react";
 
-const buttonSpace = "1.55%";
-
 const AddUser = ({ cancel, addUser }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +17,7 @@ const AddUser = ({ cancel, addUser }) => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          addUser(name, email);
         }}
       >
         <CardContent>
@@ -33,7 +32,7 @@ const AddUser = ({ cancel, addUser }) => {
             value={name}
             onChange={({ target: { value } }) => setName(value)}
             fullWidth
-            sx={{ mb: "2.5%" }}
+            sx={{ mb: "1.5%" }}
           />
 
           <TextField
@@ -48,23 +47,12 @@ const AddUser = ({ cancel, addUser }) => {
         </CardContent>
 
         <CardActions>
-          <Button
-            variant="contained"
-            color="error"
-            fullWidth
-            onClick={cancel}
-            sx={{ mr: buttonSpace, ml: buttonSpace }}
-          >
-            Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            onClick={() => addUser(name, email)}
-            sx={{ ml: buttonSpace, mr: buttonSpace }}
-          >
+          <Button variant="contained" color="primary" type="submit" fullWidth>
             Add
+          </Button>
+
+          <Button variant="contained" color="error" fullWidth onClick={cancel}>
+            Cancel
           </Button>
         </CardActions>
       </form>
